@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ギルド概要</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      color: #664455;
+      font-family: "メイリオ", meiryo, "ヒラギノ角ゴ Pro W3", "游ゴシック", YuGothic, sans-serif;
+      line-height: 1.8;
+      position: relative;
+      z-index: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('haikei1.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      body::before {
+        background-image: url('haikeis1.png');
+        background-size: 100% auto;
+        background-position: top center;
+      }
+    }
+
+    .top-back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #f4a7b9;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1001;
+      transition: background-color 0.3s;
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+    }
+
+    .top-back-button:hover {
+      background-color: #e1879c;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 0.5em;
+      color: #aa336a;
+    }
+
+    table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    th {
+      background-color: #fcd3e1;
+      color: #7a2e50;
+      font-weight: 600;
+      width: 35%;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .section {
+      margin-top: 50px;
+      width: 100%;
+      max-width: 800px;
+      background-color: rgba(255,255,255,0.85);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      color: #cc6699;
+      margin-top: 0;
+      border-bottom: 2px solid #fcbad3;
+      padding-bottom: 6px;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 6px;
+    }
+
+    a {
+      color: #cc3366;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      th, td {
+        font-size: 0.95rem;
+        padding: 12px;
+      }
+
+      .container {
+        padding-top: 80px;
+      }
+
+      .section h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* ▼ 修正したハンバーガーメニュー */
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      width: 40px;
+      height: 36px;
+      cursor: pointer;
+      background-color: rgba(255, 204, 229, 0.5); /* 薄ピンク + 透過 */
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background-color: #cc3366; /* 濃いピンク */
+      border-radius: 2px;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 260px;
+      height: 100%;
+      background-color: #fff0f6;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      transition: right 0.3s ease;
+      z-index: 1000;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .menu-overlay.open {
+      right: 0;
+    }
+
+    .menu-overlay h2 {
+      font-size: 1.2rem;
+      color: #e87ea0;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu-overlay ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .menu-overlay li {
+      margin: 6px 0;
+    }
+
+    .menu-overlay a {
+      text-decoration: none;
+      color: #77636e;
+      font-size: 1rem;
+    }
+
+    .menu-overlay a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーメニュー -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- メニューの中身 -->
+  <div class="menu-overlay" id="menuOverlay">
+    <h2>にゃんだふるについて</h2>
+    <ul>
+      <li><a href="greeting.html">盟主挨拶</a></li>
+      <li><a href="profile.html">ギルド概要</a></li>
+      <li><a href="member.html">メンバー一覧</a></li>
+    </ul>
+    <h2>周年記念</h2>
+<ul>
+  <li><a href="aniv.html">周年記念アンケート</a></li>
+  <li><a href="gacha.html">アニバーサリー記念ガチャ</a></li>
+  <li><a href="member.html">メンバー限定</a></li>
+  <li><a href="goods.html">グッズ</a></li>
+</ul>
+  </div>
+
+  <!-- 戻るボタン -->
+  <button class="top-back-button" id="backButton">← もどる</button>
+
+  <div class="container">
+    <h1>ギルド概要</h1>
+
+    <table>
+      <tr><th>ギルド名</th><td>にゃんだふる</td></tr>
+      <tr><th>創立</th><td>2024年8月</td></tr>
+      <tr><th>盟主</th><td>いちご みるく</td></tr>
+      <tr><th>所属サーバー</th><td>25サーバー</td></tr>
+      <tr><th>活動内容</th><td>チャット、討伐、イベント参加、社会貢献</td></tr>
+      <tr><th>スローガン</th><td>「誤字も愛、全てに感謝、にゃんだふる」</td></tr>
+      <tr><th>メンバー構成</th><td><a href="member.html">メンバー一覧を見る</a></td></tr>
+      <tr><th>ギルド方針</th><td>ルールは一切なし、リアル優先で皆で楽しむ</td></tr>
+      <tr><th>資本金</th><td>300ダイヤ</td></tr>
+      <tr><th>メンバー数</th><td>48/50（淑女：48名）（2025年8月19日時点）</td></tr>
+    </table>
+
+    <!-- 受賞歴 -->
+    <div class="section">
+      <h2>受賞歴</h2>
+      <ul>
+        <li>ホワイト優良ギルド2024年認定</li>
+        <li>HQOL推進パートナー</li>
+        <li>イルカ釣り最多アワード2025優秀賞受賞</li>
+      </ul>
+    </div>
+
+    <!-- 外部リンク -->
+    <div class="section">
+      <h2>外部リンク</h2>
+      <ul>
+        <li><a href="https://discord.gg/3URTtUY6dZ" target="_blank" rel="noopener">Discord（にゃんだふる公式）</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <audio id="backSound" src="back.mp3" preload="auto"></audio>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    hamburger.addEventListener('click', (e) => {
+      menuOverlay.classList.toggle('open');
+      e.stopPropagation();
+    });
+
+    menuOverlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    document.body.addEventListener('click', () => {
+      if (menuOverlay.classList.contains('open')) {
+        menuOverlay.classList.remove('open');
+      }
+    });
+
+    const backButton = document.getElementById('backButton');
+    const backSound = document.getElementById('backSound');
+
+    backButton.addEventListener('click', () => {
+      backSound.currentTime = 0;
+      backSound.play();
+      backSound.onended = () => {
+        location.href = 'toppage.html?skipCat=1';
+      };
+    });
+  </script>
+
+</body>
+</html>

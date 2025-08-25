@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enter</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: "Meiryo", sans-serif;
+      background-color: #ffeef5;
+      overflow-x: hidden;
+      text-align: center;
+      position: relative;
+    }
+    #intro {
+      height: 100vh;
+      cursor: pointer;
+      position: relative;
+      background-color: #ffeef5;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #cat {
+      width: 200px;
+      max-width: 90vw;
+      height: auto;
+      user-select: none;
+      transition: opacity 0.5s ease;
+    }
+    #footprints {
+      margin-top: 20px;
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      user-select: none;
+      /* 足跡の上下位置を個別に変えたいのでflex containerは変更なし */
+    }
+    .footprint {
+      width: 40px;
+      height: 40px;
+      filter: brightness(0.5);
+      opacity: 0; /* 最初は非表示 */
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    /* 足跡の上下位置調整 */
+    .footprint:nth-child(1) {
+      transform: translateY(-10px);
+    }
+    .footprint:nth-child(2) {
+      transform: translateY(10px);
+    }
+    .footprint:nth-child(3) {
+      transform: translateY(-10px);
+    }
+
+    @media (max-width: 600px) {
+      #cat {
+        width: 160px;
+      }
+      .footprint {
+        width: 30px;
+        height: 30px;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="intro" title="クリックして進む">
+    <img id="cat" src="topcat.png" alt="みるく猫" />
+    <div id="footprints">
+      <img src="footprint.png" class="footprint" alt="足跡1" />
+      <img src="footprint.png" class="footprint" alt="足跡2" />
+      <img src="footprint.png" class="footprint" alt="足跡3" />
+    </div>
+  </div>
+
+  <script>
+    const intro = document.getElementById('intro');
+    const cat = document.getElementById('cat');
+    const footprints = document.querySelectorAll('.footprint');
+
+    intro.addEventListener('click', () => {
+      cat.src = 'top_wake.png';  // 猫画像を切り替え
+
+      setTimeout(() => {
+        footprints.forEach((fp, i) => {
+          setTimeout(() => {
+            fp.style.opacity = '0.5';
+          }, i * 800);
+        });
+
+        setTimeout(() => {
+          window.location.href = 'toppage.html';
+        }, footprints.length * 800 + 1000);
+
+      }, 1000);  // 猫画像切り替え後1秒遅延
+    });
+  </script>
+</body>
+</html>

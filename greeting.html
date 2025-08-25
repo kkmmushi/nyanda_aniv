@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>盟主挨拶 ― 一周年に寄せて</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      color: #664455;
+      font-family: "メイリオ", meiryo, "ヒラギノ角ゴ Pro W3", "游ゴシック", YuGothic, sans-serif;
+      line-height: 1.8;
+      position: relative;
+      z-index: 0;
+    }
+
+    /* 背景画像 */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('haikei1.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      body::before {
+        background-image: url('haikeis1.png');
+        background-size: 100% auto;
+        background-position: top center;
+      }
+    }
+
+    .top-back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ea7ca9;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.3s;
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+    }
+
+    .top-back-button:hover {
+      background-color: #d86796;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 0.1em;
+      color: #aa336a;
+    }
+
+    h2 {
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+      font-weight: 500;
+      font-size: 1.4rem;
+      margin-top: 0;
+      margin-bottom: 1.5em;
+      color: #cc6699;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .content img {
+      max-width: 280px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .text {
+      text-align: left;
+    }
+
+    @media(min-width: 768px) {
+      .content {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .text {
+        padding-left: 20px;
+      }
+    }
+
+    /* ▼ ハンバーガーメニュー修正版（プロフィールページ風） ▼ */
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      width: 40px;
+      height: 36px;
+      cursor: pointer;
+      background-color: rgba(255, 204, 229, 0.5);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background-color: #cc3366;
+      border-radius: 2px;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 260px;
+      height: 100%;
+      background-color: #fff0f6;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      transition: right 0.3s ease;
+      z-index: 1000;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .menu-overlay.open {
+      right: 0;
+    }
+
+    .menu-overlay h2 {
+      font-size: 1.2rem;
+      color: #e87ea0;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu-overlay ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .menu-overlay li {
+      margin: 6px 0;
+    }
+
+    .menu-overlay a {
+      text-decoration: none;
+      color: #77636e;
+      font-size: 1rem;
+    }
+
+    .menu-overlay a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 戻るボタン -->
+<button class="top-back-button" id="backButton">← もどる</button>
+
+<!-- ▼ ハンバーガーメニュー本体 ▼ -->
+<div class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<div class="menu-overlay" role="navigation" aria-label="メニュー" id="menuOverlay">
+  <h2>にゃんだふるについて</h2>
+  <ul>
+    <li><a href="greeting.html">盟主挨拶</a></li>
+    <li><a href="profile.html">ギルド概要</a></li>
+    <li><a href="member.html">メンバー一覧</a></li>
+  </ul>
+  <h2>周年記念</h2>
+<ul>
+  <li><a href="aniv.html">周年記念アンケート</a></li>
+  <li><a href="gacha.html">アニバーサリー記念ガチャ</a></li>
+  <li><a href="member.html">メンバー限定</a></li>
+  <li><a href="goods.html">グッズ</a></li>
+</ul>
+</div>
+
+<!-- ▼ メインコンテンツ ▼ -->
+<div class="container">
+  <h1>盟主挨拶</h1>
+  <h2>― 一周年に寄せて ―</h2>
+
+  <div class="content">
+    <img src="Ichiko_greeting.jpg" alt="盟主いちごみるくの写真" />
+    <div class="text">
+      <p>にゃんだふるは25サーバーの中でも最長の歴史を誇る、伝統あるギルドです。この度、2025年8月に1年の節目を迎えました。</p>
+      <p>当ギルドは多角的な問題を内包する社会に力強く働きかけ、人類のステージをより高みへと進めることを目的としております。高い志を有した気品高いメンバーが多数在籍しており、様々な分野で崇高な活動を行っております。</p>
+      <p>設立当初より最優ギルドの地位を保ち続けるのは並大抵のことではありません。これまで所属されたメンバーの皆さまの努力、貢献、誤字の賜物です。</p>
+      <p>今後も、社会からの期待に答え、よりよく発展していくために、当ギルドの使命達成に向けメンバー一同、誠心誠意努力していく所存です。</p>
+      <p>これからも、皆さまを愛し、皆さまに愛されるにゃんだふるをよろしくお願いいたします。</p>
+      <p style="text-align:right;">2025年8月<br>にゃんだふる　盟主　いちご　みるく</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const menuOverlay = document.getElementById('menuOverlay');
+
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuOverlay.classList.toggle('open');
+  });
+
+  menuOverlay.addEventListener('click', (e) => {
+    e.stopPropagation(); // メニュー内クリックで閉じないようにする
+  });
+
+  document.body.addEventListener('click', () => {
+    if (menuOverlay.classList.contains('open')) {
+      menuOverlay.classList.remove('open');
+    }
+  });
+
+  const backButton = document.getElementById('backButton');
+  backButton.addEventListener('click', () => {
+    const audio = new Audio('back.mp3');
+    audio.play();
+    audio.addEventListener('ended', () => {
+      location.href = 'toppage.html?skipCat=1';
+    });
+    // 万が一音が再生されない場合の保険
+    setTimeout(() => {
+      location.href = 'toppage.html?skipCat=1';
+    }, 300);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>メンバー一覧</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      color: #664455;
+      font-family: "メイリオ", meiryo, "ヒラギノ角ゴ Pro W3", "游ゴシック", YuGothic, sans-serif;
+      line-height: 1.8;
+      position: relative;
+      z-index: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('haikei1.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      body::before {
+        background-image: url('haikeis1.png');
+        background-size: 100% auto;
+        background-position: top center;
+      }
+    }
+
+    .top-back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #f4a7b9;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1001;
+      transition: background-color 0.3s;
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+    }
+
+    .top-back-button:hover {
+      background-color: #e1879c;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 0.5em;
+      color: #aa336a;
+    }
+
+    .section {
+      margin-top: 50px;
+      width: 100%;
+      max-width: 800px;
+      background-color: rgba(255,255,255,0.85);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      color: #cc6699;
+      margin-top: 0;
+      border-bottom: 2px solid #fcbad3;
+      padding-bottom: 6px;
+    }
+
+    .officer-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .officer-cards .card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 16px;
+      text-align: center;
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .officer-cards .card:hover {
+      transform: scale(1.05);
+    }
+
+    .officer-cards .photo {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .officer-cards .name {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #7a2e50;
+      white-space: pre-line;
+    }
+
+    .officer-cards .role {
+      font-size: 0.95rem;
+      color: #aa336a;
+    }
+
+    .card.leader {
+      border: 3px dashed #ff69b4;
+      background-color: #fff0f8;
+      box-shadow: 0 0 15px #ffb6c1;
+    }
+
+    .card.subleader {
+      border: 2px solid #ffaec9;
+      background-color: #fff6fa;
+      box-shadow: 0 0 10px #f8c5d8;
+    }
+
+    .officer-cards.large .card {
+      width: 180px;
+    }
+
+    .officer-cards.small {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .officer-cards.small .card {
+      width: 144px;
+      font-size: 0.85rem;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .officer-cards.small .name {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: #7a2e50;
+      white-space: pre-line;
+    }
+
+    .officer-cards.small .role {
+      font-size: 0.8rem;
+      color: #aa336a;
+    }
+
+    .small-text {
+      font-size: 0.85em;
+    }
+
+    .member-list ul {
+      padding-left: 20px;
+      margin: 10px 0 0;
+      list-style-type: disc;
+    }
+
+    .member-list li {
+      margin-bottom: 6px;
+    }
+
+    .update-date {
+      font-size: 0.9rem;
+      color: #888;
+      font-weight: normal;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .officer-cards .card {
+        width: 100%;
+      }
+
+      .member-list ul {
+        columns: 1;
+      }
+
+      .section h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      width: 40px;
+      height: 36px;
+      cursor: pointer;
+      background-color: rgba(255, 204, 229, 0.5);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background-color: #cc3366;
+      border-radius: 2px;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 260px;
+      height: 100%;
+      background-color: #fff0f6;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      transition: right 0.3s ease;
+      z-index: 1000;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .menu-overlay.open {
+      right: 0;
+    }
+
+    .menu-overlay h2 {
+      font-size: 1.2rem;
+      color: #e87ea0;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu-overlay ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .menu-overlay li {
+      margin: 6px 0;
+    }
+
+    .menu-overlay a {
+      text-decoration: none;
+      color: #77636e;
+      font-size: 1rem;
+    }
+
+    .menu-overlay a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="menu-overlay" id="menuOverlay">
+    <h2>にゃんだふるについて</h2>
+    <ul>
+      <li><a href="greeting.html">盟主挨拶</a></li>
+      <li><a href="profile.html">ギルド概要</a></li>
+      <li><a href="member.html">メンバー一覧</a></li>
+    </ul>
+    <h2>周年記念</h2>
+<ul>
+  <li><a href="aniv.html">周年記念アンケート</a></li>
+  <li><a href="gacha.html">アニバーサリー記念ガチャ</a></li>
+  <li><a href="member.html">メンバー限定</a></li>
+  <li><a href="goods.html">グッズ</a></li>
+</ul>
+  </div>
+
+  <button class="top-back-button" id="backButton">← もどる</button>
+
+  <div class="container">
+    <h1>メンバー一覧</h1>
+
+    <div class="section">
+      <h2>役員</h2>
+
+      <div class="officer-cards large">
+        <div class="card leader">
+          <img src="top1.jpg" alt="いちご みるく" class="photo" />
+          <div class="name">いちご みるく<br>（産屋敷壱子）</div>
+          <div class="role">盟主</div>
+        </div>
+        <div class="card subleader">
+          <img src="top2.jpg" alt="みるく" class="photo" />
+          <div class="name">みるく<br>（鬼舞乳無惨💕）</div>
+          <div class="role">副盟主</div>
+        </div>
+        <div class="card subleader">
+          <img src="top3.jpg" alt="ゆか" class="photo" />
+          <div class="name">由翔<br><span class="small-text">（翔©️ﾄ由ｶﾀﾃﾞｰﾄｼﾀｲ）</span></div>
+          <div class="role">副盟主</div>
+        </div>
+      </div>
+
+      <div class="officer-cards small" style="margin-top: 30px;">
+        <div class="card"><div class="name">AAA<br>（鳥頭）</div><div class="role">軍師</div></div>
+        <div class="card"><div class="name">air<br>（蚊柱）</div><div class="role">外交役</div></div>
+        <div class="card"><div class="name">さんま<br>（魚柱さ・ンマ）</div><div class="role">秋の味覚担当</div></div>
+        <div class="card"><div class="name">く〜りっしゅ<br>（く~りっ酒🍷）</div><div class="role">誤字アドバイザー</div></div>
+        <div class="card"><div class="name">ねぎとろ<br><span class="small-text">（葱の呼吸壱ノ型）</span></div><div class="role">浮き身</div></div>
+      </div>
+    </div>
+
+    <div class="section member-list">
+      <h2>指南役メンバー</h2>
+      <ul id="memberList"></ul>
+    </div>
+
+    <p class="update-date">※2025年8月21日現在</p>
+  </div>
+
+  <audio id="backSound" src="back.mp3" preload="auto"></audio>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    hamburger.addEventListener('click', (e) => {
+      menuOverlay.classList.toggle('open');
+      e.stopPropagation();
+    });
+
+    menuOverlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    document.body.addEventListener('click', () => {
+      if (menuOverlay.classList.contains('open')) {
+        menuOverlay.classList.remove('open');
+      }
+    });
+
+    const backButton = document.getElementById('backButton');
+    const backSound = document.getElementById('backSound');
+
+    backButton.addEventListener('click', () => {
+      backSound.currentTime = 0;
+      backSound.play();
+      backSound.onended = () => {
+        location.href = 'toppage.html?skipCat=1';
+      };
+    });
+
+    const membersText = `あんず（追走ｯ!ｱﾝZOOM）、桃白白（たおπ）、ASUKA(いしよわ©️(ㆆ.ㆆ)）、るちこ（ルルチ）、りんごあめ（甘い呼吸ﾊﾟｸﾞｹｪｷ）、猫飼ｲﾀｲﾄ思ｯﾃﾀ、Woｫ餅ﾂｷ♡ﾐｮ～ﾝ!!、まい、鉄火巻き（ぽぺろぺろ）、まかろん、ましろ（愛のﾁｮｺ冷ﾏｼﾁｩ♡）、レギンレイヴ（杏仁豆腐ｸﾚﾖ!ﾚｷﾞｯ）、りお（割引クーポン）、Arata、ｽﾞｷｭﾝ♡meetﾎﾞｰﾙ、はるひ（胡蝶はるひ）、かみりん、ひろり、ふみ、みるく💕、みちゅ、ルク、♪こんぶ、天王 はるか、こたつむり、暴れん坊照準、理冬、なべ、Runa.、感電!KU☆RA☆GE、るな、柘榴、不死川下僕、かおり5、Robin、奈々、シャル、うあち、HINA\``;
+    const memberList = document.getElementById("memberList");
+    membersText.split("、").forEach(name => {
+      if (name.trim()) {
+        const li = document.createElement("li");
+        li.textContent = name.trim();
+        memberList.appendChild(li);
+      }
+    });
+  </script>
+
+</body>
+</html>

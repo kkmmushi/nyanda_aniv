@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>グッズ詳細 - にゃんだふる</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      color: #664455;
+      font-family: "メイリオ", meiryo, "ヒラギノ角ゴ Pro W3", "游ゴシック", YuGothic, sans-serif;
+      line-height: 1.8;
+      position: relative;
+      z-index: 0;
+    }
+    body::before {
+      content: "";
+      position: fixed; top:0; left:0;
+      width:100vw; height:100vh;
+      background-image: url('haikei1.png');
+      background-size:cover; background-repeat:no-repeat;
+      background-position:center;
+      opacity:0.2; z-index:-1;
+    }
+    @media (max-width:600px) {
+      body::before {
+        background-image: url('haikeis1.png');
+        background-size:100% auto;
+        background-position: top center;
+      }
+    }
+    .top-back-button {
+      position: fixed; top:15px; left:15px;
+      background-color:#f4a7b9; color:#fff;
+      padding:8px 16px; font-size:1rem;
+      border:none; border-radius:20px;
+      box-shadow:0 3px 6px rgba(0,0,0,0.2);
+      cursor:pointer; z-index:1001;
+      transition: background-color 0.3s;
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+    }
+    .top-back-button:hover { background-color:#e1879c; }
+    .container {
+      max-width:800px;
+      margin: 100px auto 40px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size:2rem;
+      color:#aa336a;
+      margin-top:0;
+    }
+    .image {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .image img {
+      max-width: 70%;
+      border-radius: 8px;
+    }
+    .price {
+      font-size:1.3rem;
+      color:#884466;
+      font-weight:bold;
+      text-align:center;
+      margin: 10px 0;
+    }
+    .options label {
+      display:block; margin: 10px 0 5px;
+      font-size:1rem;
+    }
+    .options select,
+    .options input[type="number"] {
+      width:100%; padding:6px;
+      border-radius:6px; border:1px solid #ccc;
+      font-size:1rem;
+    }
+    .add-to-cart {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #f28ebc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+    .add-to-cart:hover { background-color: #e17aa7; }
+    .description {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #555;
+    }
+    .hamburger {
+      position: fixed; top:20px; right:20px; z-index:1001;
+      width:40px; height:36px; cursor:pointer;
+      background-color:rgba(255,204,229,0.5); border-radius:10px;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    .hamburger span {
+      display:block; width:24px; height:3px; background-color:#cc3366;
+      border-radius:2px; margin:3px 0; transition:all 0.3s ease;
+    }
+    .menu-overlay {
+      position: fixed; top:0; right:-100%;
+      width:70%; max-width:260px; height:100%;
+      background-color:#fff0f6;
+      box-shadow:-2px 0 8px rgba(0,0,0,0.2);
+      transition:right 0.3s ease; z-index:1000;
+      padding:40px 20px; box-sizing:border-box; text-align:left;
+    }
+    .menu-overlay.open { right:0; }
+    .menu-overlay h2 { font-size:1.2rem; color:#e87ea0; margin-top:20px; margin-bottom:10px; }
+    .menu-overlay ul { list-style:none; padding-left:0; margin:0; }
+    .menu-overlay li { margin:6px 0; }
+    .menu-overlay a { text-decoration:none; color:#77636e; font-size:1rem; }
+    .menu-overlay a:hover { text-decoration:underline; }
+    @media (max-width:600px) {
+      h1 { font-size:1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  <div class="menu-overlay" id="menuOverlay">
+    <h2>にゃんだふるについて</h2>
+    <ul>
+      <li><a href="greeting.html">盟主挨拶</a></li>
+      <li><a href="profile.html">ギルド概要</a></li>
+      <li><a href="member.html">メンバー一覧</a></li>
+    </ul>
+    <h2>周年記念</h2>
+<ul>
+  <li><a href="aniv.html">周年記念アンケート</a></li>
+  <li><a href="gacha.html">アニバーサリー記念ガチャ</a></li>
+  <li><a href="member.html">メンバー限定</a></li>
+  <li><a href="goods.html">グッズ</a></li>
+</ul>
+  </div>
+  <button class="top-back-button" id="backButton">← グッズ一覧へ</button>
+  <div class="container">
+    <h1 id="item-name">商品名</h1>
+    <div class="image"><img id="item-image" src="images/goods1.png" alt="商品画像"></div>
+    <div class="price" id="item-price">¥0</div>
+    <div class="options">
+      <label>サイズ：
+        <select id="item-size"></select>
+      </label>
+      <label>数量：
+        <input type="number" id="item-qty" min="1" max="10" value="1">
+      </label>
+    </div>
+    <button class="add-to-cart">カートに入れる</button>
+    <div class="description" id="item-description">
+      こちらは商品の説明文が入ります。素材、サイズ感、注意事項など自由に記述できます。
+    </div>
+  </div>
+
+  <audio id="backSound" src="back.mp3" preload="auto"></audio>
+  <script>
+    const data = {
+      1: {
+        name: "オリジナルTシャツ（佐和子ver）",
+        price: "¥3,000",
+        img: "images/goods1.png",
+        sizes: ["レディースS", "レディースM", "レディースL", "レディースLL"],
+        desc: "佐和子のデザインがプリントされた記念Tシャツ。柔らかな素材で着心地抜群。"
+      },
+      2: {
+        name: "オリジナルTシャツ（鬼ver）",
+        price: "¥3,000",
+        img: "images/goods2.png",
+        sizes: ["レディースS", "レディースM", "レディースL", "レディースLL"],
+        desc: "にゃんだネームをモチーフにした力強いデザインのTシャツ。普段使いにも最適。"
+      },
+      3: {
+        name: "アイマスク（ねるんだふる）",
+        price: "¥2,000",
+        img: "images/goods3.png",
+        sizes: ["小さめ", "普通", "大きめ"],
+        desc: "睡眠への強い意志が描かれた可愛いアイマスク。旅行や睡眠にぴったり。"
+      },
+      4: {
+        name: "アクリルキーホルダー（milk）",
+        price: "¥700",
+        img: "images/goods4.png",
+        sizes: ["ワンサイズ"],
+        desc: "milkのキャラクターがポップなアクリルキーホルダーに。カバンに付けてｲｪｱ🤍。"
+      },
+      5: {
+        name: "オリジナルキャップ（ｼｭｯｼｭｯ）",
+        price: "¥3,000",
+        img: "images/goods5.png",
+        sizes: ["小さめ", "普通", "大きめ"],
+        desc: "スタイリッシュなデザインで男女問わず着用できるキャップ。闘志を示そう。"
+      },
+      6: {
+        name: "オリジナルパーカー（ﾓﾂ）",
+        price: "¥4,500",
+        img: "images/goods6.png",
+        sizes: ["レディースS", "レディースM", "レディースL", "レディースLL"],
+        desc: "あなたと会いたいという気持ちをテーマにしたかわいいパーカー。軽くて暖かく、秋冬に大活躍。"
+      },
+      7: {
+        name: "マグカップ（ゲームver）",
+        price: "¥1,800",
+        img: "images/goods7.png",
+        sizes: ["ワンサイズ"],
+        desc: "ゲーム風ドット絵が映えるマグカップ。デスクでの癒しアイテムに。"
+      },
+      8: {
+        name: "オリジナル海パン（葱）",
+        price: "¥3,500",
+        img: "images/goods8.png",
+        sizes: ["メンズM", "メンズL", "メンズLL"],
+        desc: "夏にぴったり！葱のモチーフがユニークな水着。ワンポイントに杏の意匠が映える。"
+      }
+    };
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    const item = data[id] || {};
+
+    document.getElementById("item-name").textContent = item.name || "—";
+    document.getElementById("item-price").textContent = item.price || "—";
+    document.getElementById("item-image").src = item.img || "";
+    document.getElementById("item-description").textContent = item.desc || "";
+
+    const sizeSelect = document.getElementById("item-size");
+    sizeSelect.innerHTML = "";
+    if (item.sizes) item.sizes.forEach(sz => {
+      const opt = document.createElement("option");
+      opt.textContent = sz;
+      sizeSelect.appendChild(opt);
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menuOverlay');
+    hamburger.addEventListener('click', e => { menuOverlay.classList.toggle('open'); e.stopPropagation(); });
+    menuOverlay.addEventListener('click', e => e.stopPropagation());
+    document.body.addEventListener('click', () => { if (menuOverlay.classList.contains('open')) menuOverlay.classList.remove('open'); });
+
+    const backButton = document.getElementById('backButton');
+    const backSound = document.getElementById('backSound');
+    backButton.addEventListener('click', () => {
+      backSound.currentTime = 0; backSound.play();
+      backSound.onended = () => { location.href = 'toppage.html'; };
+    });
+  </script>
+</body>
+</html>

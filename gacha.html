@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anniversary　にゃんだふるステッカー　特別ガチャ</title>
+  <style>
+    html, body {
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      color: #664455;
+      font-family: "メイリオ", meiryo, sans-serif;
+      line-height: 1.8;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('haikei1.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      body::before {
+        background-image: url('haikeis1.png');
+        background-size: 130% auto;
+        background-position: top center;
+      }
+    }
+
+    .top-back-button,
+    .gacha-button {
+      background-color: #ea7ca9;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      font-family: "M PLUS Rounded 1c", meiryo, sans-serif;
+    }
+
+    .top-back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+    }
+
+    .top-back-button:hover,
+    .gacha-button:hover {
+      background-color: #d86796;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.76rem;
+      color: #aa336a;
+      line-height: 1.4;
+      margin-bottom: 0.5em;
+    }
+
+    .subtext {
+      font-size: 0.76rem;
+      color: #996677;
+      margin-bottom: 2em;
+      max-width: 600px;
+    }
+
+    .gacha-image img {
+      max-width: 240px;
+      width: 100%;
+    }
+
+    .gacha-button {
+      margin: 20px auto;
+    }
+
+    .sticker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+      gap: 6px;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 900px;
+      justify-items: center;
+    }
+
+    .sticker-button {
+      padding: 8px 12px;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      min-width: 48px;
+      background-color: transparent;
+      color: #aa6688;
+      transition: background-color 0.3s;
+    }
+
+    .sticker-button.owned {
+      background-color: #fff;
+      color: #aa6688;
+    }
+
+    .sticker-button.locked {
+      background-color: transparent;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      flex-direction: column;
+      text-align: center;
+      padding: 32px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal img {
+      width: auto;
+      max-width: 400px;
+      height: auto;
+      border-radius: 14px;
+      margin-bottom: 15px;
+    }
+
+    .modal .sticker-title {
+      font-size: 2.88rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #cc3366;
+    }
+
+    .modal .sticker-flavor {
+      font-size: 1.56rem;
+      color: #775566;
+    }
+
+    @media(min-width: 768px) {
+      h1 {
+        font-size: 2.24rem;
+      }
+
+      .subtext {
+        font-size: 0.84rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .subtext {
+        font-size: 0.7rem;
+      }
+
+      .modal {
+        max-width: 60vw !important;
+        padding: 20px;
+      }
+
+      .modal img {
+        width: auto !important;
+        max-width: 80vw !important;
+        height: auto !important;
+      }
+
+      .modal .sticker-title {
+        font-size: 2.1rem;
+      }
+
+      .modal .sticker-flavor {
+        font-size: 1.1rem;
+      }
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-3px, 0); }
+      40% { transform: translate(3px, 0); }
+      60% { transform: translate(-2px, 0); }
+      80% { transform: translate(2px, 0); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .shake {
+      animation: shake 0.4s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+<button class="top-back-button" id="backButton">← もどる</button>
+
+<div class="container">
+  <h1>Anniversary<br>にゃんだふるステッカー　特別ガチャ</h1>
+  <p class="subtext">
+    期間限定ガチャ登場！にゃんだふるメンバーのステッカーを集めよう！<br>
+    どれだけ集められるかな？！？！全部集めたら自慢しよう！！！( っ¯ ³¯ )っ~♡！！ 
+  </p>
+  <div class="gacha-image">
+    <img src="images2/gacha_main.png" alt="ガチャ筐体画像" id="gachaMachine" />
+  </div>
+  <button class="gacha-button" id="gachaButton">ガチャを回す</button>
+  <div class="sticker-grid" id="stickerGrid"></div>
+</div>
+
+<div class="modal" id="stickerModal">
+  <img src="" alt="ステッカー画像" id="modalImage" />
+  <div class="sticker-title" id="stickerTitle"></div>
+  <div class="sticker-flavor" id="stickerFlavor"></div>
+</div>
+
+<audio id="gachaSound" src="gachagacha.mp3" preload="auto"></audio>
+
+<script>
+  const backButton = document.getElementById('backButton');
+  backButton.addEventListener('click', () => {
+    const audio = new Audio('back.mp3');
+    audio.play();
+    audio.addEventListener('ended', () => {
+      location.href = 'toppage.html?skipCat=1';
+    });
+    setTimeout(() => {
+      location.href = 'toppage.html?skipCat=1';
+    }, 300);
+  });
+
+  const gachaButton = document.getElementById("gachaButton");
+  const stickerGrid = document.getElementById("stickerGrid");
+  const modal = document.getElementById("stickerModal");
+  const modalImage = document.getElementById("modalImage");
+  const stickerTitle = document.getElementById("stickerTitle");
+  const stickerFlavor = document.getElementById("stickerFlavor");
+  const gachaMachine = document.getElementById("gachaMachine");
+  const gachaSound = document.getElementById("gachaSound");
+
+  const totalStickers = 43;
+
+  const stickerData = {
+    1: { title: "みるく", flavor: "いつでもｲｪｱ🤍" },
+    2: { title: "AAA", flavor: "眼光鋭いけど鼻◯そ飛ばすよ" },
+    3: { title: "さんま", flavor: "さまちセーラーだっけ？" },
+    4: { title: "あんず", flavor: "爆走！追走！あんちゃん🤍" },
+    5: { title: "たおぱい", flavor: "そのππに包まれたい人続出" },
+    6: { title: "RRR", flavor: "るるちフィーバー🤍" },
+    7: { title: "猫飼ｲﾀｲﾄ思ｯﾃﾀ", flavor: "ついに飼えたんだ…" },
+    8: { title: "Woｫ餅ﾂｷ🤍ﾐｮ～ﾝ!!", flavor: "みょーーーーん" },
+    9: { title: "ぽぺろぺろ", flavor: "鉄火巻ぺろぺろりん" },
+    10: { title: "杏仁豆腐ｸﾚﾖ!ﾚｷﾞｯ", flavor: "踊るﾚｷﾞ～" },
+    11: { title: "りんごあめ", flavor: "うるるん可愛いﾊﾞｸﾞじゃないです" },
+    12: { title: "白菜事件", flavor: "にゃんだふる史でも有名な事件の一つ" },
+    13: { title: "暴れん坊照準", flavor: "よく考えたら暴れたら危険だな" },
+    14: { title: "柘榴", flavor: "柘榴ちころころ" },
+    15: { title: "感電!KU☆RA☆GE", flavor: "水饅頭食べたくなる" },
+    16: { title: "AIR", flavor: "ﾌﾞｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰｰﾝ" },
+    17: { title: "不死川下僕", flavor: "ﾒ、ﾒｽ猫ちゃん…///" },
+    18: { title: "にゃんだふる（実物）", flavor: "哺乳瓶でココア飲みたい" },
+    19: { title: "微課金", flavor: "微課金とは…ｸﾝｶｸﾝｶ" },
+    20: { title: "いちごみるく", flavor: "いちごみるくのいちご潰す派？" },
+    21: { title: "いしよわ©️(ㆆ.ㆆ)", flavor: "(ㆆ.ㆆ)" },
+    22: { title: "く~りっ酒🍷", flavor: "誤字の王様🤍" },
+    23: { title: "割引クーポン", flavor: "割引ってだけで気持ちいい///" },
+    24: { title: "愛のﾁｮｺ冷ﾏｼﾁｩ♡", flavor: "固い絆って…天才か" },
+    25: { title: "まかろん", flavor: "見てみて。これ入れ歯🤍" },
+    26: { title: "♪こんぶ", flavor: "江戸時代の飛脚になった" },
+    27: { title: "食中毒", flavor: "がんばれ🤍がんばれ🤍" },
+    28: { title: "葱きなこクリーム", flavor: "ちょっとおめでたい感じする" },
+    29: { title: "ｺﾞﾘ盟主", flavor: "みんなを抱えて走れます///" },
+    30: { title: "和解", flavor: "和解した。" },
+    31: { title: "にゃんだふるでぃ～っｽ", flavor: "うぃ～ｽ！" },
+    32: { title: "いちこ（ゲームの姿）", flavor: "ぶっちゅうううう３秒前" },
+    33: { title: "ぽこ（ゲームの姿）", flavor: "とても紳士的だががさつ" },
+    34: { title: "AAA（ゲームの姿）", flavor: "とても紳士的だが飽き性" },
+    35: { title: "みるく（ゲームの姿）", flavor: "とても紳士的だが大食漢" },
+    36: { title: "ねぎ（ゲームの姿）", flavor: "とても紳士的だが神経質" },
+    37: { title: "にゃんだふる", flavor: "にゃんだふる！" },
+    38: { title: "ｽﾞｷｭﾝ♡meetﾎﾞｰﾙ", flavor: "これからうずら卵も射抜きます" },
+    39: { title: "翔©️ﾄ由ｶﾀﾃﾞｰﾄｼﾀｲ", flavor: "ゆかち（幼少期の姿）" },
+    40: { title: "なんで光ってんだ", flavor: "本鳥にもわかりません。" },
+    41: { title: "求・恋話", flavor: "群がります。" },
+    42: { title: "ねぎ切り", flavor: "億切りの漢…" },
+    43: { title: "ねぎきなこクリームもつ", flavor: "最終形態" },
+  };
+
+
+  let ownedStickers = JSON.parse(localStorage.getItem("ownedStickers") || "[]");
+
+  function renderStickers() {
+    stickerGrid.innerHTML = "";
+    for (let i = 1; i <= totalStickers; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      btn.classList.add("sticker-button");
+      if (ownedStickers.includes(i)) {
+        btn.classList.add("owned");
+        btn.disabled = false;
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          showSticker(i, false);
+        };
+      } else {
+        btn.classList.add("locked");
+        btn.disabled = true;
+        btn.onclick = null;
+      }
+      stickerGrid.appendChild(btn);
+    }
+  }
+
+  function showSticker(i, isGachaResult = true) {
+    modalImage.src = `images2/sticker${i}.png`;
+    stickerTitle.textContent = stickerData[i]?.title || `ステッカー #${i}`;
+    stickerFlavor.textContent = stickerData[i]?.flavor || "";
+
+    if (isGachaResult) {
+      modalImage.style.maxWidth = "1260px";
+      modalImage.style.width = "auto";
+      modal.style.maxWidth = "95%";
+    } else {
+      modalImage.style.maxWidth = "900px";
+      modalImage.style.width = "auto";
+      modal.style.maxWidth = "90%";
+    }
+    modal.style.display = "flex";
+  }
+
+  gachaButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    // サウンドを再生
+ gachaSound.play();
+setTimeout(() => {
+  gachaSound.pause();
+  gachaSound.currentTime = 0;
+}, 3000); // 3秒後に停止
+
+    // 揺れアニメーション
+    gachaMachine.classList.add("shake");
+    setTimeout(() => {
+      gachaMachine.classList.remove("shake");
+    }, 2000);
+
+    setTimeout(() => {
+      const probabilities = [];
+      for (let i = 1; i <= 43; i++) {
+        if (i <= 26) probabilities[i] = (100 - (5 * 5 + 1 * 5 + 0.6 * 3 + 0.1 * 4)) / 26;
+        else if (i >= 27 && i <= 31) probabilities[i] = 5;
+        else if (i >= 32 && i <= 36) probabilities[i] = 1;
+        else if (i >= 37 && i <= 39) probabilities[i] = 0.6;
+        else if (i >= 40 && i <= 43) probabilities[i] = 0.1;
+      }
+
+      const rand = Math.random() * 100;
+      let sum = 0;
+      let newSticker = 1;
+      for (let i = 1; i <= 43; i++) {
+        sum += probabilities[i];
+        if (rand <= sum) {
+          newSticker = i;
+          break;
+        }
+      }
+
+      if (!ownedStickers.includes(newSticker)) {
+        ownedStickers.push(newSticker);
+        localStorage.setItem("ownedStickers", JSON.stringify(ownedStickers));
+      }
+
+      showSticker(newSticker, true);
+      renderStickers();
+
+    }, 3600);
+  });
+
+  modal.addEventListener("click", e => {
+    e.stopPropagation();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (modal.style.display === "flex") {
+      if (!modal.contains(e.target) && e.target !== gachaButton) {
+        modal.style.display = "none";
+      }
+    }
+  });
+
+  renderStickers();
+</script>
+
+<p class="subtext">
+  ※音がでます<br>
+  ※フレーバーテキストは個人の主観です。<br>
+  ※このガチャはブラウザを更新したりキャッシュをクリアすると、収集状況がリセットされます。 
+</p>
+</body>
+</html>

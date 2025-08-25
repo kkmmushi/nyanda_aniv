@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1周年アンケート</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      color: #664455;
+      font-family: "メイリオ", meiryo, "ヒラギノ角ゴ Pro W3", "游ゴシック", YuGothic, sans-serif;
+      line-height: 1.8;
+      position: relative;
+      z-index: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('haikei1.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      body::before {
+        background-image: url('haikeis1.png');
+        background-size: 100% auto;
+        background-position: top center;
+      }
+    }
+
+    .top-back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #f4a7b9;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1001;
+      transition: background-color 0.3s;
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+    }
+
+    .top-back-button:hover {
+      background-color: #e1879c;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-color: #fff0f6;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(255,105,180,0.15) 10px, transparent 11px),
+    radial-gradient(circle at 35% 60%, rgba(255,182,193,0.12) 11px, transparent 12px),
+    radial-gradient(circle at 60% 30%, rgba(255,105,180,0.15) 10px, transparent 11px),
+    radial-gradient(circle at 80% 75%, rgba(255,182,193,0.12) 11px, transparent 12px);
+  background-repeat: repeat;
+  background-size: 160px 160px;
+}
+
+.container::after {
+  content: "♥";
+  position: absolute;
+  font-size: 30px;
+  color: rgba(255,105,180,0.1);
+  user-select: none;
+  pointer-events: none;
+  top: 10%;
+  left: 20%;
+  transform: rotate(-15deg);
+  z-index: -1;
+}
+
+    h1 {
+      font-family: "M PLUS Rounded 1c", "メイリオ", meiryo, sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 0.5em;
+      color: #aa336a;
+    }
+
+    .section {
+      margin-top: 50px;
+      width: 100%;
+      max-width: 800px;
+      background-color: rgba(255,255,255,0.85);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      color: #cc6699;
+      margin-top: 0;
+      border-bottom: 2px solid #fcbad3;
+      padding-bottom: 6px;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 6px;
+    }
+
+    a {
+      color: #cc3366;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding-top: 80px;
+      }
+
+      .section h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      width: 40px;
+      height: 36px;
+      cursor: pointer;
+      background-color: rgba(255, 204, 229, 0.5);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background-color: #cc3366;
+      border-radius: 2px;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 260px;
+      height: 100%;
+      background-color: #fff0f6;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      transition: right 0.3s ease;
+      z-index: 1000;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .menu-overlay.open {
+      right: 0;
+    }
+
+    .menu-overlay h2 {
+      font-size: 1.2rem;
+      color: #e87ea0;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .menu-overlay ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .menu-overlay li {
+      margin: 6px 0;
+    }
+
+    .menu-overlay a {
+      text-decoration: none;
+      color: #77636e;
+      font-size: 1rem;
+    }
+
+    .menu-overlay a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーメニュー -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- メニューの中身 -->
+  <div class="menu-overlay" id="menuOverlay">
+    <h2>にゃんだふるについて</h2>
+    <ul>
+      <li><a href="greeting.html">盟主挨拶</a></li>
+      <li><a href="profile.html">ギルド概要</a></li>
+      <li><a href="member.html">メンバー一覧</a></li>
+    </ul>
+    <h2>周年記念</h2>
+    <ul>
+      <li><a href="#">クイズ</a></li>
+      <li><a href="#">ガチャ</a></li>
+      <li><a href="#">メンバー限定</a></li>
+      <li><a href="anniversary.html">アンケート</a></li>
+    </ul>
+  </div>
+
+  <!-- 戻るボタン -->
+  <button class="top-back-button" id="backButton">← もどる</button>
+
+  <div class="container">
+    <h1>にゃんだふる 1周年アンケート</h1>
+    <p style="text-align: center; font-size: 1.1rem; margin-bottom: 30px;">
+      1周年アンケートに答えてくれたひとありがとー！！ ランダムにご紹介っ！！！<br>
+      みんなのかわいい回答を楽しんでね(´ิ ❥ ´ิ♡)
+    </p>
+
+<div class="section">
+      <h2>🌴 無人島に連れていくなら？</h2>
+      <ul>
+        <li>陽！料理もできるし、サバイバル強そう！てかもはや無人島に住んでる！</li>
+        <li>塔真さん、行く前からすべて手配されてそう✨</li>
+        <li>亜嵐一択。木も割れそう。</li>
+        <li>じんさん 空間移動の武器持ってるから</li>
+        <li>陽さん！なんかキャンプとかそう言うの慣れてそう！&楽しくキャンプとかできそう！</li>
+        <li>翔ちゃん そこら辺のもの、美味しく料理してくれそうだから！</li>
+        <li>尋さん 無人島の地下にプライベートジェットを隠してそうだから</li>
+        <li>尋💖</li>
+        <li>翔ちゃん→食は安定。頼りになりそう。気軽に脱出までの計画練れそう。（脱出前提？？）</li>
+        <li>冠氷 金あるからなんでも出来る。てかワープできるじゃん。</li>
+        <li>しょへ 共にうまいリゾート飯作るヨ❗️</li>
+        <li>冠氷 ビジュがいい</li>
+        <li>翔ちゃん、料理できるからサバイバル向いてそう</li>
+        <li>絶対に灰園翔平 スパダリなのと、無人島に行ってもちゃんと美味しいご飯作ってくれそう♡そして何かあったら守ってくれそうだから♡</li>
+        <li>弁慶。なんだかんだすぐ調達してきてくれるのでは？そしていつのまにかリゾート島よ</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>👿 契約したいスティグマは？</h2>
+      <ul>
+        <li>眠らなくてよくなる能力。ただし寝言が止まらない。</li>
+        <li>記憶をすべて保存できるけど、1日1つ忘れる代償。</li>
+        <li>暑すぎるから気候改変能力…💦</li>
+        <li>無駄な脂肪を自由に体内から取り出すことのできる能力。これで一儲けしつつ代償も低そう…</li>
+        <li>時間停止！！！</li>
+        <li>瞬間記憶能力(現実で使えるんだったら) 瞬間移動(in ディバだったら)</li>
+        <li>目の前に布団出すスティグマ🤞…zzZ</li>
+        <li>重力を操りたいですね。空飛べるし、嫌なやつが体重計乗ってる時にバグらせることができるので。</li>
+        <li>ねこねこ亭壊滅</li>
+        <li>・キャラ達のなら玲音のハックス→なにかに役立ちそう</li>
+        <li>・自分自身欲しいやつ→一時的に自分の認識を消す。あるいは一時的な存在消去（スティグマ解除後不自然なく周りにとけ込める）</li>
+        <li>どれだけ食べても太らないスティグマ</li>
+        <li>口に出したことが現実になるスティグマ💚</li>
+        <li>タイムトリップ</li>
+        <li>瞬間移動</li>
+        <li>自分がその時想像した武器を自由に精製できるとか…？</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🌀 自分を何かにたとえると？</h2>
+      <ul>
+        <li>朝のヨーグルト。ちょっとすっぱいけど、さわやか。</li>
+        <li>季節外れの桜餅。</li>
+        <li>奇妙なさんま 猫以上の猫orナマケモノ🦥以下の怠け者(来世は猫がいい…🐈)</li>
+        <li>…ｶﾋﾟﾊﾞﾗ(　´  T  `)ﾇｰﾝ</li>
+        <li>にんじんを食べないうさぎ</li>
+        <li>あん🙈💕</li>
+        <li>気分屋の猫🐱</li>
+        <li>動物園にいる、エサを投げたら死ぬ気で取りに行くサル</li>
+        <li>最近あひるって言われました 普通に屈辱ね</li>
+        <li>採れたてねぎ新鮮です</li>
+        <li>いしよわちゃん...もしくは怠け者なトド🦭</li>
+        <li>翔平の浴衣(:3_ヽ)_</li>
+        <li>牛</li>
+      </ul>
+    </div>
+  </div>
+
+      <p style="text-align: center; font-size: 1.1rem; margin-bottom: 30px;">
+      おなじみの無人島問題まで斬り伏せる尋さんｶｯｹｪ…！！翔ちゃんのレシピ本の発売はまだですか？<br>
+  　　今は精神と時の部屋を生み出すスティグマがほしいよん<br>
+    </p>
+
+  <audio id="backSound" src="back.mp3" preload="auto"></audio>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    hamburger.addEventListener('click', (e) => {
+      menuOverlay.classList.toggle('open');
+      e.stopPropagation();
+    });
+
+    menuOverlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    document.body.addEventListener('click', () => {
+      if (menuOverlay.classList.contains('open')) {
+        menuOverlay.classList.remove('open');
+      }
+    });
+
+    const backButton = document.getElementById('backButton');
+    const backSound = document.getElementById('backSound');
+
+    backButton.addEventListener('click', () => {
+      backSound.currentTime = 0;
+      backSound.play();
+      backSound.onended = () => {
+        location.href = 'toppage.html';
+      };
+    });
+
+    function shuffleListItems(selector) {
+      const ul = document.querySelector(selector);
+      if (!ul) return;
+
+      const items = Array.from(ul.children);
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+
+      ul.innerHTML = '';
+      items.forEach(item => ul.appendChild(item));
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      shuffleListItems('.section:nth-of-type(1) ul');
+      shuffleListItems('.section:nth-of-type(2) ul');
+      shuffleListItems('.section:nth-of-type(3) ul');
+    });
+  </script>
+</body>
+</html>

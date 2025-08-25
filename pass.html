@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>メンバー限定エリア</title>
+  <style>
+    body {
+      font-family: "Meiryo", sans-serif;
+      background-color: #fff0f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #e87ea0;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      border: 2px solid #ffaad4;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      width: 200px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #f4a7b9;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e87ea0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>メンバー限定ページ</h1>
+<p>パスワードを入力してください</p>
+
+<form onsubmit="return checkPassword()">
+  <input type="password" id="pw" placeholder="パスワード" />
+  <br />
+  <button type="submit">入室する</button>
+</form>
+
+<script>
+  function checkPassword() {
+    const pw = document.getElementById("pw").value;
+    if (pw === "136") {
+      alert("パスワードが正解です！");
+      window.location.href = "limited.html";
+    } else {
+      alert("パスワードが違います 💦");
+    }
+    return false; // フォームの送信をブロック
+  }
+</script>
+
+</body>
+</html>
